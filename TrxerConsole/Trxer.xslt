@@ -13,7 +13,10 @@
     <![CDATA[
     public string RemoveAssemblyName(string asm) 
     {
-      return asm.Substring(0,asm.IndexOf(','));
+        int idx = asm.IndexOf(',');
+        if (idx == -1)
+            return asm;
+        return asm.Substring(0, idx);
     }
     public string RemoveNamespace(string asm) 
     {
@@ -22,6 +25,11 @@
     }
     public string GetShortDateTime(string time)
     {
+      if( string.IsNullOrEmpty(time) )
+      {
+        return string.Empty;
+      }
+      
       return DateTime.Parse(time).ToString();
     }
     
@@ -41,7 +49,12 @@
     
     public string ToExactTimeDefinition(string duration)
     {
-         return  ToExtactTime(TimeSpan.Parse(duration).TotalMilliseconds);
+      if( string.IsNullOrEmpty(duration) )
+      {
+        return string.Empty;
+      } 
+    
+      return  ToExtactTime(TimeSpan.Parse(duration).TotalMilliseconds);
     }
     
     public string ToExactTimeDefinition(string start,string finish)
